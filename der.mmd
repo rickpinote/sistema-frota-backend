@@ -1,0 +1,135 @@
+erDiagram
+    USUARIOS ||--o{ MOTORISTAS : "tem"
+    VEICULOS ||--o{ ABASTECIMENTOS : "registra"
+    VEICULOS ||--o{ UTILIZACOES : "registra"
+    VEICULOS ||--o{ MANUTENCOES : "registra"
+    VEICULOS ||--o{ DOCUMENTOS_VEICULO : "possui"
+    VEICULOS ||--o{ MULTAS : "recebe"
+    VEICULOS ||--o{ ORDENS_SERVICO : "gera"
+    VEICULOS ||--o{ RASTREAMENTO_GPS : "envia dados"
+    MOTORISTAS ||--o{ ABASTECIMENTOS : "realiza"
+    MOTORISTAS ||--o{ UTILIZACOES : "conduz"
+    MOTORISTAS }|..o{ MULTAS : "responsável por"
+
+    USUARIOS {
+        SERIAL id_usuario PK
+        VARCHAR nome
+        VARCHAR email UK
+        VARCHAR senha
+        VARCHAR tipo_usuario
+        BOOLEAN ativo
+        TIMESTAMP data_criacao
+        TIMESTAMP data_atualizacao
+    }
+
+    MOTORISTAS {
+        SERIAL id_motorista PK
+        INT id_usuario FK
+        VARCHAR cnh UK
+        VARCHAR categoria_cnh
+        DATE validade_cnh
+        VARCHAR telefone
+        DATE data_contratacao
+    }
+
+    VEICULOS {
+        SERIAL id_veiculo PK
+        VARCHAR placa UK
+        VARCHAR marca
+        VARCHAR modelo
+        INT ano_fabricacao
+        VARCHAR cor
+        VARCHAR tipo_combustivel
+        DECIMAL quilometragem_atual
+        VARCHAR status
+        DATE data_aquisicao
+        DECIMAL capacidade_tanque
+    }
+
+    ABASTECIMENTOS {
+        SERIAL id_abastecimento PK
+        INT id_veiculo FK
+        INT id_motorista FK
+        TIMESTAMP data_abastecimento
+        DECIMAL quilometragem
+        DECIMAL litros
+        DECIMAL valor_total
+        DECIMAL preco_por_litro
+        VARCHAR posto
+        VARCHAR tipo_combustivel
+        BOOLEAN tanque_cheio
+    }
+
+    UTILIZACOES {
+        SERIAL id_utilizacao PK
+        INT id_veiculo FK
+        INT id_motorista FK
+        TIMESTAMP data_saida
+        DECIMAL quilometragem_saida
+        VARCHAR destino
+        TEXT finalidade
+        TIMESTAMP data_retorno
+        DECIMAL quilometragem_retorno
+        TEXT observacoes
+    }
+
+    MANUTENCOES {
+        SERIAL id_manutencao PK
+        INT id_veiculo FK
+        VARCHAR tipo_manutencao
+        TEXT descricao
+        DATE data_inicio
+        DATE data_fim
+        DECIMAL custo
+        DECIMAL quilometragem_manutencao
+        DECIMAL proxima_manutencao_km
+        DATE proxima_manutencao_data
+        VARCHAR status
+    }
+
+    DOCUMENTOS_VEICULO {
+        SERIAL id_documento PK
+        INT id_veiculo FK
+        VARCHAR tipo_documento
+        VARCHAR numero_documento UK
+        DATE data_emissao
+        DATE data_vencimento
+        VARCHAR arquivo_url
+        TEXT observacoes
+    }
+
+    MULTAS {
+        SERIAL id_multa PK
+        INT id_veiculo FK
+        INT id_motorista FK
+        TIMESTAMP data_infracao
+        VARCHAR local_infracao
+        TEXT descricao_infracao
+        DECIMAL valor_multa
+        INT pontos_cnh
+        VARCHAR status_pagamento
+        DATE data_vencimento
+        TEXT observacoes
+    }
+
+    ORDENS_SERVICO {
+        SERIAL id_ordem_servico PK
+        INT id_veiculo FK
+        TIMESTAMP data_abertura
+        TEXT descricao_problema
+        TEXT servico_solicitado
+        DATE data_previsao_conclusao
+        VARCHAR status
+        DECIMAL custo_estimado
+        TEXT observacoes
+    }
+
+    RASTREAMENTO_GPS {
+        SERIAL id_rastreamento PK
+        INT id_veiculo FK
+        DECIMAL latitude
+        DECIMAL longitude
+        TIMESTAMP data_hora
+        DECIMAL velocidade
+        DECIMAL direcao
+    }

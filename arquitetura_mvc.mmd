@@ -1,0 +1,42 @@
+graph TD
+    A[Usuário] --> B(Frontend: React.js/Tailwind CSS)
+    B --> C{API REST: Node.js/Express.js}
+    C --> D[Controller]
+    D --> E[Service Layer]
+    E --> F[Model: ORM/PostgreSQL]
+    F --> G[Banco de Dados: PostgreSQL]
+    G --> F
+    F --> E
+    E --> D
+    D --> C
+    C --> B
+
+    subgraph Backend
+        D
+        E
+        F
+        G
+    end
+
+    subgraph Frontend
+        B
+    end
+
+    subgraph Integrações
+        H[API Google Maps] --> C
+        I[Serviços de Notificação SMS_Email] --> C
+        J[APIs de Multas] --> C
+        K[Dispositivos GPS_App_Mobile] --> C
+    end
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#bbf,stroke:#333,stroke-width:2px
+    style C fill:#ccf,stroke:#333,stroke-width:2px
+    style D fill:#cfc,stroke:#333,stroke-width:2px
+    style E fill:#ffc,stroke:#333,stroke-width:2px
+    style F fill:#fcf,stroke:#333,stroke-width:2px
+    style G fill:#ccc,stroke:#333,stroke-width:2px
+    style H fill:#fcc,stroke:#333,stroke-width:2px
+    style I fill:#fcc,stroke:#333,stroke-width:2px
+    style J fill:#fcc,stroke:#333,stroke-width:2px
+    style K fill:#fcc,stroke:#333,stroke-width:2px
